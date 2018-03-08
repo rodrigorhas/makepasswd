@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+
+const isNumber = require('util').isNumber;
 const celestials = require('./celestials.json');
 const keys = require('./keys.json');
 const specialKeys = ['@', '#', '$', '&'];
@@ -31,7 +34,11 @@ const genKey = () => {
   return [moreRandom(celestial), superKey, year, key].join('');
 }
 
-console.log(
-  'Your password is: ',
-  genKey()
-)
+const args = process.argv.slice(2);
+const repeat = args[0] ? parseInt(args[0], 10) : 10;
+
+if (isNumber(repeat)) {
+  new Array(repeat).fill(0).forEach(() => console.log(genKey()))
+}
+
+process.exit();
